@@ -1,0 +1,111 @@
+<template>
+    <lightning-card title="Accounts data" icon-name="standard:account">
+        <div class="slds-m-around_medium">
+        <template if:true={accountKPIs}>
+        <table class="slds-table">
+            <thead>
+                <tr class="slds-text-title_caps">
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td scope="col">
+                        <div>YTD total of order amount:</div>
+                    </td>
+                    <td scope="col">
+                        <template if:true={ordersAmountCurrentYear}>
+                        <div>
+                            <lightning-formatted-number
+                                value={ordersAmountCurrentYear.ordersAmountValue}
+                                format-style="currency"
+                                maximum-fraction-digits="0"
+                            ></lightning-formatted-number>        
+                        </div>
+                        </template>
+                    </td>
+                </tr>
+                <tr>
+                    <td scope="col">
+                        <div>YTD-5 total of order amount:</div>
+                    </td>
+                    <td scope="col">
+                        <div>
+                            <template if:true={ordersAmountCurrentYearMinus5}>
+                                <lightning-formatted-number
+                                    value={ordersAmountCurrentYearMinus5.ordersAmountValue}
+                                    format-style="currency"
+                                    maximum-fraction-digits="0"
+                                ></lightning-formatted-number>
+                            </template>                    
+                        </div>
+                    </td>
+                </tr>   
+                <tr>
+                    <td scope="col">
+                        <div>Open cases amount:</div>
+                    </td>
+                    <td scope="col">
+                        <div>
+                            <lightning-formatted-number value={accountKPIs.openCasesCount}></lightning-formatted-number>
+                        </div>
+                    </td>
+                </tr>  
+                <tr>
+                    <td scope="col">
+                        <div>Total cases amount:</div>
+                    </td>
+                    <td scope="col">
+                        <div>
+                            <lightning-formatted-number value={accountKPIs.casesCount}></lightning-formatted-number>
+                        </div>
+                    </td>
+                </tr> 
+                <tr>
+                    <td scope="col">
+                        <div>Customer since:</div>
+                    </td>
+                    <td scope="col">
+                        <div>
+                            <lightning-formatted-date-time value={accountKPIs.customerSince}></lightning-formatted-date-time>
+                        </div>
+                    </td>
+                </tr>                                                            
+                <tr>
+                    <td scope="col">
+                        <div>Total number of orders:</div>
+                    </td>
+                    <td scope="col">
+                        <div>
+                            <lightning-formatted-number value={accountKPIs.ordersCount}></lightning-formatted-number>
+                        </div>
+                    </td>
+                </tr> 
+                <tr>
+                    <td scope="col">
+                        <div>Birthday:</div>
+                    </td>
+                    <td scope="col">
+                        <div>
+                            <lightning-formatted-date-time value={accountKPIs.birthDay}></lightning-formatted-date-time>
+                        </div>
+                    </td>
+                </tr>                                                                            
+                <tr>
+                    <td scope="col">
+                        <div>Average order Value:</div>
+                    </td>
+                    <td scope="col">
+                        <div>
+                            <lightning-formatted-number value={accountKPIs.avarageOrderValue}></lightning-formatted-number>
+                        </div>
+                    </td>
+                </tr>                 
+            </tbody>
+        </table>        
+         </template>
+        <template if:true={account.error}>
+            <p>{account.error}</p>
+        </template>   
+    </div>  
+    </lightning-card>   
+</template>
