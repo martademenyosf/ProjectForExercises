@@ -34,19 +34,6 @@ export default class OsfAccountKPIs extends LightningElement {
             this.error = error;
         }
     }    
-    
-        @wire(getOrdersAmountCurrentYearMinus5, { accountId: '$recordId' })
-    wiredOrdersAmountCurrentYearMinus5({ error, data }) {
-        if (data) {
-            this.ordersAmountCurrentYearMinus5 = data;
-            console.log('orders amount 5 years ago:' + JSON.stringify(data));
-            this.error = undefined;
-            // other treatment here ...         
-        } else if (error) {
-            this.ordersAmountCurrentYearMinus5 = undefined;
-            this.error = error;
-        }
-    } 
      
     @wire(getOrdersAmountCurrentYearMinus5, { accountId: '$recordId' })
     wiredOrdersAmountCurrentYearMinus5({ error, data }) {

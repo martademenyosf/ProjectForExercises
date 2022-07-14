@@ -96,16 +96,18 @@
                     </td>
                     <td scope="col">
                         <div>
-                            <lightning-formatted-number value={accountKPIs.avarageOrderValue}></lightning-formatted-number>
+                            <lightning-formatted-number value={accountKPIs.avarageOrderValue} format-style="currency"></lightning-formatted-number>
                         </div>
                     </td>
                 </tr>                 
             </tbody>
         </table>        
          </template>
-        <template if:true={account.error}>
-            <p>{account.error}</p>
+
+        <template if:true={error}>
+            <p>{error}</p>
         </template>   
+
     </div>  
     </lightning-card>   
 </template>
