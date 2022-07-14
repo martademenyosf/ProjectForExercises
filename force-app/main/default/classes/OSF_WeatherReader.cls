@@ -11,14 +11,25 @@
  *
  *********************************************************************/
 public with sharing class OSF_WeatherReader {
-    private static final String WEATHER_URL = 'https://api.openweathermap.org/data/2.5/weather';
-    private static final String WEATHER_IMG_URL = 'https://openweathermap.org/img/wn/';
-    private static final String APPID = '9ab4d1340bf4d964ff4412a9068f7edc';
+    private static final String WEATHER_URL; // = 'https://api.openweathermap.org/data/2.5/weather';
+    private static final String WEATHER_IMG_URL; // = 'https://openweathermap.org/img/wn/';
+    private static final String APPID; // = '9ab4d1340bf4d964ff4412a9068f7edc';
+    static {
+        //grab from custom setting values
+        Weather_Http_List_Setting__c settings = Weather_Http_List_Setting__c.getInstance('WeatherInfo');
+        System.debug('WeatherInfo: ' + settings);
+        WEATHER_URL = settings.Weather_API_URL__c;
+        APPID = settings.APPID__c;
+        WEATHER_IMG_URL = settings.Weather_IMG_URL__c;
+        System.debug('WEATHER_URL: ' + WEATHER_URL);
+        System.debug('WEATHER_IMG_URL: ' + WEATHER_IMG_URL);
+        System.debug('APPID: ' + APPID);  
+    }
 
     public static OSF_WeatherCalloutMock mock = null;
 
 /**********************************************************************
- * @Name         : getWeatherInfo
+ * @Name         : getWeatherInfo   
  * @Description  : Returns the weather info 
  *
  * @Created By   : Marta Demeny
@@ -28,7 +39,7 @@ public with sharing class OSF_WeatherReader {
  * @return List<OSF_WeatherReaderResult> - list of result object
  *********************************************************************/
     @InvocableMethod(callout=true label='Get Account Weather Info')
-    public static List<OSF_WeatherReaderResult> getWeatherInfo(List<String> accountBillingCity) {
+    public static List<OSF_WeatherReaderResult> getWeatherInfo(List<String> accountBillingCity) {   
         OSF_WeatherWrapper weatherWrapper = executeAPICall(accountBillingCity[0]);
         //adding the URL to images if they exist
         List<OSF_WeatherWrapperWeatherData> weatherDataList = (List<OSF_WeatherWrapperWeatherData>) weatherWrapper.weather;
