@@ -14,8 +14,6 @@ global with sharing class OSF_UpdateAccountsBatch implements Database.Batchable<
     // instance member to retain state across transactions
     public Integer recordsProcessed = 0;
 
-    private static final String WEATHER_IMG_URL = 'https://openweathermap.org/img/wn/';
-
 /**********************************************************************
  * @Name         : start
  * @Description  : Implements the batchable interface method and it's invoked when the batch job starts. 
@@ -49,20 +47,16 @@ global with sharing class OSF_UpdateAccountsBatch implements Database.Batchable<
     global void execute(Database.BatchableContext bc, List<Account> source) {
 
         for (Account acc: source) {
-            System.debug('Account Id: =' + acc.Id + ', BillingCity: ' + acc.BillingCity);
-            if (acc.BillingCity != null) {
-                OSF_WeatherWrapper weatherWrapper = OSF_WeatherReader.executeAPICall(acc.BillingCity);
-                for(OSF_WeatherWrapperWeatherData wd: (List<OSF_WeatherWrapperWeatherData>) weatherWrapper.weather) {
-                    if ((wd.icon != null) && (wd.icon.length() != 0)) {
-                        acc.Icon__c = WEATHER_IMG_URL + wd.icon + '.png';
-                    }
-                    acc.description = wd.description;
-                    break;
+             if (acc.BillingCity != null) {
+                List<OSF_WeatherReaderResult> results = OSF_WeatherReader.getWeatherInfo(new List<String>{acc.BillingCity});
+                if (!results.isEmpty()) {
+                    OSF_WeatherReaderResult result = results[0];
+                    acc.Icon__c = result.icon;
+                    acc.Description = result.description;
+                    acc.Real_Feeling__c = result.real_Feeling;
+                    acc.Humidity__c = result.humidity;
+                    acc.Temperature__c = result.temperature;
                 }
-        
-                acc.Temperature__c = weatherWrapper.main.temp;
-                acc.Real_Feeling__c = weatherWrapper.main.feels_like;
-                acc.Humidity__c = weatherWrapper.main.humidity;
             }
             recordsProcessed = recordsProcessed + 1;
         }
