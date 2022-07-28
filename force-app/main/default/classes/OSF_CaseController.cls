@@ -28,7 +28,7 @@ public with sharing class OSF_CaseController {
             SELECT Id, CaseNumber, Origin, Status
             FROM Case
             WHERE Status != 'Closed'
-            AND Owner.id = :ownerId
+            AND createdbyid = :ownerId
         ];
     }
 
