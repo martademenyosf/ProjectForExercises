@@ -1,4 +1,6 @@
 {
+    "ordersAmountCurrentYear": {"ordersAmountValue":85000},
+    "ordersAmountCurrentYearMinus5":{"ordersAmountValue":25000},
     "avarageOrderValue": 55000,
     "birthDay": "1999-10-07",
     "casesCount": 3,

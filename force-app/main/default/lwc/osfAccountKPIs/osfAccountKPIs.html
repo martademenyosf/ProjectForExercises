@@ -10,39 +10,35 @@
             <tbody>
                 <tr>
                     <td scope="col">
-                        <div>YTD total of order amount:</div>
+                        <div>{label.YTDTotalOfOrderAmount}</div>
                     </td>
                     <td scope="col">
-                        <template if:true={ordersAmountCurrentYear}>
                         <div>
                             <lightning-formatted-number
-                                value={ordersAmountCurrentYear.ordersAmountValue}
+                                value={accountKPIs.ordersAmountCurrentYear.ordersAmountValue}
                                 format-style="currency"
                                 maximum-fraction-digits="0"
                             ></lightning-formatted-number>        
                         </div>
-                        </template>
                     </td>
                 </tr>
                 <tr>
                     <td scope="col">
-                        <div>YTD-5 total of order amount:</div>
+                        <div>{label.YTD5TotalOfOrderAmount}</div>
                     </td>
                     <td scope="col">
                         <div>
-                            <template if:true={ordersAmountCurrentYearMinus5}>
-                                <lightning-formatted-number
-                                    value={ordersAmountCurrentYearMinus5.ordersAmountValue}
-                                    format-style="currency"
-                                    maximum-fraction-digits="0"
-                                ></lightning-formatted-number>
-                            </template>                    
+                            <lightning-formatted-number
+                                value={accountKPIs.ordersAmountCurrentYearMinus5.ordersAmountValue}
+                                format-style="currency"
+                                maximum-fraction-digits="0"
+                            ></lightning-formatted-number>
                         </div>
                     </td>
                 </tr>   
                 <tr>
                     <td scope="col">
-                        <div>Open cases amount:</div>
+                        <div>{label.OpenCasesAmount}</div>
                     </td>
                     <td scope="col">
                         <div>
@@ -52,7 +48,7 @@
                 </tr>  
                 <tr>
                     <td scope="col">
-                        <div>Total cases amount:</div>
+                        <div>{label.TotalCasesAmount}</div>
                     </td>
                     <td scope="col">
                         <div>
@@ -62,7 +58,7 @@
                 </tr> 
                 <tr>
                     <td scope="col">
-                        <div>Customer since:</div>
+                        <div>{label.CustomerSince}</div>
                     </td>
                     <td scope="col">
                         <div>
@@ -72,7 +68,7 @@
                 </tr>                                                            
                 <tr>
                     <td scope="col">
-                        <div>Total number of orders:</div>
+                        <div>{label.TotalNumberOfOrders}</div>
                     </td>
                     <td scope="col">
                         <div>
@@ -82,7 +78,7 @@
                 </tr> 
                 <tr>
                     <td scope="col">
-                        <div>Birthday:</div>
+                        <div>{label.Birthday}</div>
                     </td>
                     <td scope="col">
                         <div>
@@ -92,7 +88,7 @@
                 </tr>                                                                            
                 <tr>
                     <td scope="col">
-                        <div>Average order Value:</div>
+                        <div>{label.AverageOrderValue}</div>
                     </td>
                     <td scope="col">
                         <div>

@@ -12,44 +12,6 @@
  *********************************************************************/
 public with sharing class OSF_AccountController {
 /**********************************************************************
- * @Name         : getOrdersAmountCurrentYear
- * @Description  : Returns total of order totals since 1st January of current year 
- *
- * @Created By   : Marta Demeny
- * @Created Date : 07 jul. 2022
- *
- * @param String - string containing account id
- * @return AggregateResult - result objects 
- *********************************************************************/
-    @AuraEnabled(cacheable=true)
-    public static AggregateResult getOrdersAmountCurrentYear(String accountId) {
-        return [
-            SELECT SUM(TotalAmount) ordersAmountValue
-            FROM Order
-            WHERE accountId = :accountId AND EffectiveDate  = THIS_YEAR
-        ];
-    }
-
-/**********************************************************************
- * @Name         : getOrdersAmountCurrentYearMinus5
- * @Description  : Returns total of order totals since 1st January of current year - 5
- *
- * @Created By   : Marta Demeny
- * @Created Date : 07 jul. 2022
- *
- * @param String - string containing account id
- * @return AggregateResult - result objects
- *********************************************************************/
-    @AuraEnabled(cacheable=true)
-    public static AggregateResult getOrdersAmountCurrentYearMinus5(String accountId) {
-        return [
-            SELECT SUM(TotalAmount) ordersAmountValue
-            FROM Order
-            WHERE accountId = :accountId AND EffectiveDate = N_YEARS_AGO:5
-        ];
-    }
-
-/**********************************************************************
  * @Name         : getAccountKPIs
  * @Description  : Returns a wrapper class with KPIs of an Account
  *
@@ -62,6 +24,12 @@ public with sharing class OSF_AccountController {
     @AuraEnabled(cacheable=true)
     public static OSF_AccountKPIWrapper getAccountKPIs(String accountId) {
         OSF_AccountKPIWrapper kpis = new OSF_AccountKPIWrapper();
+
+        //sum of order totals since 1st January of current year
+        kpis.ordersAmountCurrentYear = [SELECT SUM(TotalAmount) ordersAmountValue FROM Order WHERE accountId = :accountId AND EffectiveDate  = THIS_YEAR];
+
+        //sum of order totals since 1st January of current year - 5
+        kpis.ordersAmountCurrentYearMinus5 = [SELECT SUM(TotalAmount) ordersAmountValue FROM Order WHERE accountId = :accountId AND EffectiveDate = N_YEARS_AGO:5];
 
         //get Open cases amount 
         AggregateResult aggregateResult = [SELECT COUNT(Id) cases FROM CASE WHERE Status != 'Closed' AND AccountId = :accountId];
@@ -87,7 +55,6 @@ public with sharing class OSF_AccountController {
             Decimal avarageOrdersValue = ordersAmount / kpis.ordersCount;
             kpis.avarageOrderValue = avarageOrdersValue.intValue();           
         }
-
 
         return kpis;
     }     

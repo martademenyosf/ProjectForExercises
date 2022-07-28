@@ -12,6 +12,12 @@
 
 public with sharing class OSF_AccountKPIWrapper {
     @AuraEnabled
+    public AggregateResult ordersAmountCurrentYear {get; set;}
+
+    @AuraEnabled
+    public AggregateResult ordersAmountCurrentYearMinus5 {get; set;}
+
+    @AuraEnabled
     public Integer openCasesCount {get; set;}
 
     @AuraEnabled
