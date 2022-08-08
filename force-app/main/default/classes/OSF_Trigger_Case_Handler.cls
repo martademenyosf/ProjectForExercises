@@ -14,6 +14,41 @@
 
 public with sharing class OSF_Trigger_Case_Handler {
 /**********************************************************************
+ * @Name         : handleBeforeUpdate
+ * @Description  : Create a new person Account using Case data or update the existing case using existing account data
+ *
+ * @Created By   : Marta Demeny
+ * @Created Date : 08 aug. 2022
+ *
+ * @param List<Case> - List of the new cases
+ * @param Boolean - boolean showing if the trigger is for update
+ *********************************************************************/
+public static void handleBeforeUpdate(List<Case> newCases, boolean isUpdate) {
+    List<Account> accounts = [SELECT Id, Name, Brand__c, personcontactId, personEmail  
+                               FROM Account 
+                               WHERE RecordTypeId = :Schema.SObjectType.Account.getRecordTypeInfosByName().get('Person Account').getRecordTypeId()];
+    List<Account> existingAccounts = new List<Account>();                           
+    for (Case cs : newCases) {
+        for (Account acc : accounts) {
+            if (acc.Brand__c != null && acc.personEmail != null && acc.Brand__c == cs.Brand__c && acc.personEmail == cs.SuppliedEmail) {
+                existingAccounts.add(acc);
+                break;
+            }
+        }
+    }
+
+    if (existingAccounts.size() == 0) {
+         //create new PersonAccount
+        createAccounts(newCases, isUpdate);
+    } else {
+        //update Case with Account Info
+        updateCases(newCases, isUpdate, existingAccounts);
+    } 
+}
+
+
+
+/**********************************************************************
  * @Name         : createAccounts
  * @Description  : Create a new person Account using Case data 
  *
@@ -40,8 +75,6 @@ public with sharing class OSF_Trigger_Case_Handler {
                 cs.ContactId = null;
             }            
         }
-        System.debug('created Accounts: ' + newAccounts);
-        System.debug('new Cases: ' + newCases);
         insert newAccounts;
     }
 /**********************************************************************
@@ -90,7 +123,6 @@ public with sharing class OSF_Trigger_Case_Handler {
  * @param Boolean - boolean showing if the trigger is for update
  *********************************************************************/
     public static void  updateCases(List<Case> newCases, boolean isUpdate, List<Account> existingAccounts) {
-        System.debug('updateCases --> existingAccounts: ' + existingAccounts);
         for (Case cs : newCases) {
             if (cs.Origin == 'Web' || (cs.Origin == 'Email' && isUpdate)) {
                 for (Account acc : existingAccounts) {
@@ -102,7 +134,5 @@ public with sharing class OSF_Trigger_Case_Handler {
             
             }
         }
-        System.debug('updateCases --> newCases: ' + newCases);
-
     }    
 }

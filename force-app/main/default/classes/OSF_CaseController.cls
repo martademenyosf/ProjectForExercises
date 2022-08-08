@@ -29,6 +29,7 @@ public with sharing class OSF_CaseController {
             FROM Case
             WHERE Status != 'Closed'
             AND createdbyid = :ownerId
+            ORDER BY CaseNumber
         ];
     }
 

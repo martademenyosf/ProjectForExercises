@@ -4,10 +4,22 @@ import getCases from '@salesforce/apex/OSF_CaseController.getCases';
 import getCustomFields from '@salesforce/apex/OSF_CaseController.getCustomFields';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 
+import GetNotClosedCases  from '@salesforce/label/c.Get_not_closed_cases';
+import LoadCases  from '@salesforce/label/c.Load_Cases';
+import CreateNewCase  from '@salesforce/label/c.Create_New_Case';
+import CreateCase from '@salesforce/label/c.Create_Case';
+
+
 export default class OsfWebToCase extends LightningElement {
     @track userId = Id;
-    @track error;
     @track customFields;
+
+    label = {
+        GetNotClosedCases,
+        LoadCases,
+        CreateNewCase,
+        CreateCase
+    };   
 
   
     cases;
@@ -22,13 +34,11 @@ export default class OsfWebToCase extends LightningElement {
   
         getCases({ ownerId: this.userId })
             .then(result => {
-                this.cases = result;
-                this.error = undefined;
-                console.log('cases: ' + JSON.stringify(this.cases));                
+                this.cases = result;         
             })
             .catch(error => {
                 this.cases = undefined;
-                this.error = error;
+                this.showErrorMessage(error);
             });
           
     }
@@ -37,18 +47,31 @@ export default class OsfWebToCase extends LightningElement {
     wireCustomFields({ error, data }) {
         if (data) {                   
             this.customFields = data;
-            this.error = undefined;
             console.log('customFields: ' + JSON.stringify(this.customFields));
         } else if ( error ) {
             this.customFields = undefined;
-            this.error = error;
-        }      
-    };
+            this.showErrorMessage(error);        }      
+    }
+
+    showErrorMessage(error) {
+        let message = '';
+        if (Array.isArray(error.body)) {
+            message = error.body.map(e => e.message).join(', ');
+        } else if (typeof error.body.message === 'string') {
+            message = error.body.message;
+        }
+        this.dispatchEvent(
+            new ShowToastEvent({
+                title: 'ERROR!!!',
+                message: message,
+                variant: 'error',
+            }),
+        );
+    }
 
     caseId;
     handleCaseCreated(event) {
         this.caseId = event.detail.id;
-        console.log('Created Case Id: ' + this.caseId);
         if(this.caseId !== null) {
             this.dispatchEvent(new ShowToastEvent({
                     title: "SUCCESS! ",
@@ -61,17 +84,11 @@ export default class OsfWebToCase extends LightningElement {
     }     
 
     handleCaseCreatedError(event) {
-        console.log('Case Created Error: ' + event.detail.error);
+        this.dispatchEvent(new ShowToastEvent({
+            title: "ERROR! ",
+            message: event.detail.error,
+            variant: "error",
+        }),
+     );
     }
-
-    handleSubmit(event) {
-        /*
-        alert('hello');
-        event.preventDefault();       // stop the form from submitting
-        const fields = event.detail.fields;
-        alert(JSON.stringify(fields));
-        console.log(fields);
-        this.template.querySelector('lightning-record-edit-form').submit(fields);
-        */
-     }    
 }

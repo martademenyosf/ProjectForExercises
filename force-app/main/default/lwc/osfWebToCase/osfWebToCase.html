@@ -1,9 +1,9 @@
 <!-- sldsValidatorIgnore -->
 <template>
-    <lightning-card title="Get not closed cases" icon-name="standard:case">
+    <lightning-card title={label.GetNotClosedCases} icon-name="standard:case">
         <div class="slds-m-around_medium">
             <p class="slds-m-bottom_small">
-                <lightning-button label="Load Cases" onclick={handleLoadCases}></lightning-button>
+                <lightning-button label={label.LoadCases} onclick={handleLoadCases}></lightning-button>
             </p>    
             <!--  Case table -->
             <template if:true={cases}>
@@ -15,17 +15,14 @@
                 >
                 </lightning-datatable>   
             </template>       
-            <template if:true={error}>
-            <!--c-error-panel errors={error}></c-error-panel-->
-            </template>
         </div>
     </lightning-card>    
-    <lightning-card title="Create New Case" icon-name="custom:custom14">  
+    <lightning-card title={label.CreateNewCase} icon-name="custom:custom14">  
       <!-- Create new Case -->
       <div class="slds-m-around_medium">
 
         <template if:true={customFields}>
-            <lightning-record-edit-form object-api-name="Case" onsuccess={handleCaseCreated} onerror={handleCaseCreatedError} onsubmit={handleSubmit}>
+            <lightning-record-edit-form object-api-name="Case" onsuccess={handleCaseCreated} onerror={handleCaseCreatedError}>
                 <lightning-messages></lightning-messages>
                
                <template for:each={customFields} for:item="customField">
@@ -38,13 +35,10 @@
                     class="slds-m-top_small"
                     variant="brand"
                     type="submit"
-                    label="Create Case"
+                    label={label.CreateCase}
                 ></lightning-button>
             </lightning-record-edit-form>
-        </template>       
-        <template if:true={error}>
-            <!--c-error-panel errors={error}></c-error-panel-->
-        </template>      
+        </template>           
       </div>
     </lightning-card>    
 </template>
