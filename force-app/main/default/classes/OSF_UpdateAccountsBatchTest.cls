@@ -28,8 +28,7 @@ public with sharing class OSF_UpdateAccountsBatchTest {
         settings.Name = 'WeatherInfo';
         settings.Weather_API_URL__c = 'https://api.openweathermap.org/data/2.5/weather';
         settings.Weather_IMG_URL__c = 'https://openweathermap.org/img/wn/';
-        settings.APPID__c = '9ab4d1340bf4d964ff4412a9068f7edc';
-        System.debug('WeatherInfo: ' + settings);
+        settings.APPID__c = '123456789';
 
         insert settings;
     }

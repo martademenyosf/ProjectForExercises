@@ -17,13 +17,9 @@ public with sharing class OSF_WeatherReader {
     static {
         //grab from custom setting values
         Weather_Http_List_Setting__c settings = Weather_Http_List_Setting__c.getInstance('WeatherInfo');
-        System.debug('WeatherInfo: ' + settings);
         WEATHER_URL = settings.Weather_API_URL__c;
         APPID = settings.APPID__c;
         WEATHER_IMG_URL = settings.Weather_IMG_URL__c;
-        System.debug('WEATHER_URL: ' + WEATHER_URL);
-        System.debug('WEATHER_IMG_URL: ' + WEATHER_IMG_URL);
-        System.debug('APPID: ' + APPID);  
     }
 
     public static OSF_WeatherCalloutMock mock = null;

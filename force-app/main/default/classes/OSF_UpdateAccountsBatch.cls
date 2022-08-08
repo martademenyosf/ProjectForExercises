@@ -80,6 +80,5 @@ global with sharing class OSF_UpdateAccountsBatch implements Database.Batchable<
             TotalJobItems, CreatedBy.Email
             FROM AsyncApexJob
             WHERE Id = :bc.getJobId()];
-        System.debug('Job info: ' + job.Status);
     }
 }
