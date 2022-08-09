@@ -1,0 +1,44 @@
+<!-- sldsValidatorIgnore -->
+<template>
+    <lightning-card title={label.GetNotClosedCases} icon-name="standard:case">
+        <div class="slds-m-around_medium">
+            <p class="slds-m-bottom_small">
+                <lightning-button label={label.LoadCases} onclick={handleLoadCases}></lightning-button>
+            </p>    
+            <!--  Case table -->
+            <template if:true={cases}>
+                <lightning-datatable
+                    key-field="Id"
+                    data={cases}
+                    columns={caseColumns}
+                    hide-checkbox-column="true"
+                >
+                </lightning-datatable>   
+            </template>       
+        </div>
+    </lightning-card>    
+    <lightning-card title={label.CreateNewCase} icon-name="custom:custom14">  
+      <!-- Create new Case -->
+      <div class="slds-m-around_medium">
+
+        <template if:true={customFields}>
+            <lightning-record-edit-form object-api-name="Case" onsuccess={handleCaseCreated} onerror={handleCaseCreatedError}>
+                <lightning-messages></lightning-messages>
+               
+               <template for:each={customFields} for:item="customField">
+                        <lightning-input-field field-name={customField.Field_Api_Name__c} value={customField.Default_Value__c} 
+                                                    readonly={customField.isReadOnly__c} key={customField.Id}></lightning-input-field>
+                </template>
+                <lightning-input-field field-name="OwnerId" value={userId}></lightning-input-field>
+
+               <lightning-button
+                    class="slds-m-top_small"
+                    variant="brand"
+                    type="submit"
+                    label={label.CreateCase}
+                ></lightning-button>
+            </lightning-record-edit-form>
+        </template>           
+      </div>
+    </lightning-card>    
+</template>

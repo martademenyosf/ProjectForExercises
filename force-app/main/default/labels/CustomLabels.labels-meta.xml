@@ -2,6 +2,7 @@
 <CustomLabels xmlns="http://soap.sforce.com/2006/04/metadata">
     <labels>
         <fullName>Average_order_Value</fullName>
+        <categories>Account KPIs</categories>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Average order Value</shortDescription>
@@ -9,20 +10,55 @@
     </labels>
     <labels>
         <fullName>Birthday</fullName>
+        <categories>Account KPIs</categories>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Birthday</shortDescription>
         <value>Birthday:</value>
     </labels>
     <labels>
+        <fullName>Create_Case</fullName>
+        <categories>Web to Case</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Create Case</shortDescription>
+        <value>Create Case</value>
+    </labels>
+    <labels>
+        <fullName>Create_New_Case</fullName>
+        <categories>Web to Case</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Create New Case</shortDescription>
+        <value>Create New Case</value>
+    </labels>
+    <labels>
         <fullName>Customer_since</fullName>
+        <categories>Account KPIs</categories>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Customer since</shortDescription>
         <value>Customer since:</value>
     </labels>
     <labels>
+        <fullName>Get_not_closed_cases</fullName>
+        <categories>Web to Case</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Get not closed cases</shortDescription>
+        <value>Get not closed cases</value>
+    </labels>
+    <labels>
+        <fullName>Load_Cases</fullName>
+        <categories>Web to Case</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Load Cases</shortDescription>
+        <value>Load Cases</value>
+    </labels>
+    <labels>
         <fullName>Open_cases_amount</fullName>
+        <categories>Account KPIs</categories>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Open cases amount</shortDescription>
@@ -30,6 +66,7 @@
     </labels>
     <labels>
         <fullName>Total_cases_amount</fullName>
+        <categories>Account KPIs</categories>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Total cases amount</shortDescription>
@@ -37,6 +74,7 @@
     </labels>
     <labels>
         <fullName>Total_number_of_orders</fullName>
+        <categories>Account KPIs</categories>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Total number of orders</shortDescription>
@@ -44,6 +82,7 @@
     </labels>
     <labels>
         <fullName>YTD_5_total_of_order_amount</fullName>
+        <categories>Account KPIs</categories>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>YTD-5 total of order amount</shortDescription>
@@ -51,6 +90,7 @@
     </labels>
     <labels>
         <fullName>YTD_total_of_order_amount</fullName>
+        <categories>Account KPIs</categories>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>YTD total of order amount</shortDescription>
